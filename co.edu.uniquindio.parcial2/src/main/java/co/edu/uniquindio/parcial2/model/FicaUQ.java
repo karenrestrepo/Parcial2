@@ -44,10 +44,26 @@ public class FicaUQ {
         this.listaTarea = listaTarea;
     }
 
+    public boolean crearEmpleado(String nombre, String apellido, String cedula, int edad,
+                                 double salario, int numeroHorasTrabajo){
+        Empleado empleado = new Empleado();
+        empleado.setNombre(nombre);
+        empleado.setApellido(apellido);
+        empleado.setCedula(cedula);
+        empleado.setEdad(edad);
+        empleado.setSalario(salario);
+        empleado.setNumeroHorasTrabajo(numeroHorasTrabajo);
+
+        getListaEmpleados().add(empleado);
+
+        return true;
+    }
     @Override
     public String toString() {
         return "FicaUQ{" +
                 "nombre='" + nombre + '\'' +
                 '}';
     }
+
+
 }
