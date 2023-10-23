@@ -10,7 +10,7 @@ public class Empleado {
     private double salario;
     private int numeroHorasTrabajo;
     private TipoContrato tipoContrato;
-    FicaUQ ficaUQ;
+    FicaUQ ownedByFicaUQ;
 
     /*Constructor*/
 
@@ -87,11 +87,11 @@ public class Empleado {
     }
 
     public FicaUQ getFicaUQ() {
-        return ficaUQ;
+        return ownedByFicaUQ;
     }
 
     public void setFicaUQ(FicaUQ ficaUQ) {
-        this.ficaUQ = ficaUQ;
+        this.ownedByFicaUQ = ficaUQ;
     }
 
     @Override

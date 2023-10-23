@@ -6,16 +6,17 @@ public class Tarea {
     private int numeroTarea;
     private Date fechaInicio;
     private Date fechaFin;
-    private double duracionTarea;
+    private long duracionTarea;
     private String descripcion;
-    FicaUQ ficaUQ;
+    private Empleado empleadoAsociado;
+    FicaUQ ownedByFicaUQ;
 
     /*Constructor*/
 
     public Tarea() {
     }
 
-    public Tarea(int numeroTarea, Date fechaInicio, Date fechaFin, double duracionTarea, String descripcion) {
+    public Tarea(int numeroTarea, Date fechaInicio, Date fechaFin, long duracionTarea, String descripcion) {
         this.numeroTarea = numeroTarea;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -53,7 +54,7 @@ public class Tarea {
         return duracionTarea;
     }
 
-    public void setDuracionTarea(double duracionTarea) {
+    public void setDuracionTarea(long duracionTarea) {
         this.duracionTarea = duracionTarea;
     }
 
@@ -66,11 +67,35 @@ public class Tarea {
     }
 
     public FicaUQ getFicaUQ() {
-        return ficaUQ;
+        return ownedByFicaUQ;
     }
 
     public void setFicaUQ(FicaUQ ficaUQ) {
-        this.ficaUQ = ficaUQ;
+        this.ownedByFicaUQ = ficaUQ;
+    }
+
+    public Empleado getEmpleadoAsociado() {
+        return empleadoAsociado;
+    }
+
+    public void setEmpleadoAsociado(Empleado empleadoAsociado) {
+        this.empleadoAsociado = empleadoAsociado;
+    }
+
+    public FicaUQ getOwnedByFicaUQ() {
+        return ownedByFicaUQ;
+    }
+
+    public void setOwnedByFicaUQ(FicaUQ ownedByFicaUQ) {
+        this.ownedByFicaUQ = ownedByFicaUQ;
+    }
+
+    public void calcularDuracion(){
+        if (fechaInicio != null && fechaFin != null) {
+            duracionTarea = fechaFin.getTime() - fechaInicio.getTime();
+        } else {
+            duracionTarea = 0;
+        }
     }
 
     @Override
