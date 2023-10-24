@@ -1,8 +1,10 @@
 package co.edu.uniquindio.parcial2.model;
 
 import co.edu.uniquindio.parcial2.Enum.TipoContrato;
+import co.edu.uniquindio.parcial2.Enum.TipoEmpleado;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FicaUQ {
@@ -48,6 +50,7 @@ public class FicaUQ {
 
     /**
      * Método para crear un empleado
+     *
      * @param nombre
      * @param apellido
      * @param cedula
@@ -55,40 +58,55 @@ public class FicaUQ {
      * @param salario
      * @param numeroHorasTrabajo
      * @param tipoContrato
+     * @param tipoEmpleado
      * @return
      */
     public boolean crearEmpleado(String nombre, String apellido, String cedula, int edad,
-                                 double salario, int numeroHorasTrabajo, Enum tipoContrato){
-        Administrador administrador = new Administrador();
-        administrador.setNombre(nombre);
-        administrador.setApellido(apellido);
-        administrador.setCedula(cedula);
-        administrador.setEdad(edad);
-        administrador.setSalario(salario);
-        administrador.setNumeroHorasTrabajo(numeroHorasTrabajo);
-        administrador.setTipoContrato((TipoContrato) tipoContrato);
+                                 double salario, int numeroHorasTrabajo, TipoContrato tipoContrato, TipoEmpleado tipoEmpleado){
 
-        Jornalero jornalero = new Jornalero();
-        jornalero.setNombre(nombre);
-        jornalero.setApellido(apellido);
-        jornalero.setCedula(cedula);
-        jornalero.setEdad(edad);
-        jornalero.setSalario(salario);
-        jornalero.setNumeroHorasTrabajo(numeroHorasTrabajo);
-        jornalero.setTipoContrato((TipoContrato) tipoContrato);
+        if(tipoEmpleado.equals(TipoEmpleado.ADMINISTRADOR)){
+            Administrador administrador = new Administrador();
+            administrador.setNombre(nombre);
+            administrador.setApellido(apellido);
+            administrador.setCedula(cedula);
+            administrador.setEdad(edad);
+            administrador.setSalario(salario);
+            administrador.setNumeroHorasTrabajo(numeroHorasTrabajo);
+            administrador.setTipoContrato((TipoContrato) tipoContrato);
+            getListaEmpleados().add(administrador);
+        }
 
-        Recolector recolector = new Recolector();
-        recolector.setNombre(nombre);
-        recolector.setApellido(apellido);
-        recolector.setCedula(cedula);
-        recolector.setEdad(edad);
-        recolector.setSalario(salario);
-        recolector.setNumeroHorasTrabajo(numeroHorasTrabajo);
-        recolector.setTipoContrato((TipoContrato) tipoContrato);
+        if(tipoEmpleado.equals(TipoEmpleado.JORNALERO)){
+            Jornalero jornalero = new Jornalero();
+            jornalero.setNombre(nombre);
+            jornalero.setApellido(apellido);
+            jornalero.setCedula(cedula);
+            jornalero.setEdad(edad);
+            jornalero.setSalario(salario);
+            jornalero.setNumeroHorasTrabajo(numeroHorasTrabajo);
+            jornalero.setTipoContrato((TipoContrato) tipoContrato);
+            getListaEmpleados().add(jornalero);
+        }
 
-        getListaEmpleados().add(administrador);
-        getListaEmpleados().add(jornalero);
-        getListaEmpleados().add(recolector);
+        if(tipoEmpleado.equals(TipoEmpleado.RECOLECTOR)){
+            Recolector recolector = new Recolector();
+            recolector.setNombre(nombre);
+            recolector.setApellido(apellido);
+            recolector.setCedula(cedula);
+            recolector.setEdad(edad);
+            recolector.setSalario(salario);
+            recolector.setNumeroHorasTrabajo(numeroHorasTrabajo);
+            recolector.setTipoContrato((TipoContrato) tipoContrato);
+            getListaEmpleados().add(recolector);
+        }
+
+
+
+
+
+
+
+
 
         return true;
     }
@@ -134,14 +152,17 @@ public class FicaUQ {
      * @param numeroTarea
      * @param cedulaEmpleado
      */
-    public void crearTarea(int numeroTarea, String cedulaEmpleado) {
+    public void crearTarea(int numeroTarea, String cedulaEmpleado, Date fechaInicio, Date fechaFin) {
         Tarea tarea = new Tarea();
         tarea.setNumeroTarea(numeroTarea);
+        tarea.setFechaInicio(fechaInicio);
+        tarea.setFechaFin(fechaFin);
 
         Empleado empleado= obtenerEmpleado(cedulaEmpleado);
         if (empleado != null){
             tarea.setEmpleadoAsociado(empleado);
         }
+        tarea.calcularDuracion();
         getListaTareas().add(tarea);
     }
 
@@ -167,25 +188,28 @@ public class FicaUQ {
      * @param cedulaEmpleado
      */
     public void eliminarCliente(String cedulaEmpleado) {
-        Empleado empleadoEncontrado = null;
-        for (Empleado empleado : getListaEmpleados()) {
-            if (empleado.getCedula().equals(cedulaEmpleado)) {
-                empleadoEncontrado = empleado;
-                getListaEmpleados().remove(empleadoEncontrado);
-                break;
-            }
+        Empleado empleadoEncontrado = obtenerEmpleado(cedulaEmpleado);
+        if(empleadoEncontrado != null){
+            getListaEmpleados().remove(empleadoEncontrado);
         }
     }
 
     public void actualizarEmpleado(String cedulaEmpleado) {
-        Empleado empleadoEncontrado = null;
-        for (Empleado empleado : getListaEmpleados()) {
-            if (empleado.getCedula().equals(cedulaEmpleado)) {
-                empleadoEncontrado = empleado;
-                getListaEmpleados().remove(empleadoEncontrado);
-                break;
-            }
+        Empleado empleadoEncontrado = obtenerEmpleado(cedulaEmpleado);
+        if(empleadoEncontrado != null){
+//            empleadoEncontrado.setNombre();
+//            empleadoEncontrado.setApellido();
         }
+
+
+
+//        for (Empleado empleado : getListaEmpleados()) {
+//            if (empleado.getCedula().equals(cedulaEmpleado)) {
+//                empleadoEncontrado = empleado;
+//                getListaEmpleados().remove(empleadoEncontrado);
+//                break;
+//            }
+//        }
     }
     @Override
     public String toString() {
@@ -193,6 +217,7 @@ public class FicaUQ {
                 "nombre='" + nombre + '\'' +
                 '}';
     }
+
 
 
 }

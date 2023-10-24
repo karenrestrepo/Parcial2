@@ -91,11 +91,19 @@ public class Tarea {
     }
 
     public void calcularDuracion(){
+        long duracionMili = 0L;
         if (fechaInicio != null && fechaFin != null) {
-            duracionTarea = fechaFin.getTime() - fechaInicio.getTime();
+            duracionMili = fechaFin.getTime() - fechaInicio.getTime();
+            duracionTarea = convertirMinutos(duracionMili);
         } else {
             duracionTarea = 0;
         }
+    }
+
+    private long convertirMinutos(long duracionMili) {
+        long duracionMinutos = 0L;
+        duracionMinutos = duracionMili / 60000;
+        return duracionMinutos;
     }
 
     @Override
